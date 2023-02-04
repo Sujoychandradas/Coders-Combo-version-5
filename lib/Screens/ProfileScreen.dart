@@ -1,7 +1,6 @@
 import 'package:coderscombo/Screens/CreatePostScreen.dart';
 import 'package:coderscombo/Screens/EditProfileScreen.dart';
 import 'package:coderscombo/Screens/WelcomeScreen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Constants/Constants.dart';
@@ -399,7 +398,10 @@ class ProfileScreen extends StatefulWidget {
   final String currentUserId;
   final String visitedUserId;
 
-  const ProfileScreen({Key? key, required this.currentUserId, required this.visitedUserId}) // PARAMETERIZED CONSTRUCTOR
+  const ProfileScreen(
+      {Key? key,
+      required this.currentUserId,
+      required this.visitedUserId}) // PARAMETERIZED CONSTRUCTOR
       : super(key: key);
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -426,8 +428,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             author: author,
             post: _allPosts[index],
           );
-        }
-    );
+        });
     // break;
     //  case 1:
     //    return ListView.builder(
@@ -445,19 +446,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // break;
     //default:
     return Center(
-        child: Text('Something wrong', style: TextStyle(fontSize: 25)
-        )
-    );
+        child: Text('Something wrong', style: TextStyle(fontSize: 25)));
 
     //  break;
-
-
   }
-
 
   getFollowersCount() async {
     int followersCount =
-    await DatabaseServices.followersNum(widget.visitedUserId);
+        await DatabaseServices.followersNum(widget.visitedUserId);
     if (mounted) {
       setState(() {
         _followersCount = followersCount;
@@ -467,7 +463,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   getFollowingCount() async {
     int followingCount =
-    await DatabaseServices.followingNum(widget.visitedUserId);
+        await DatabaseServices.followingNum(widget.visitedUserId);
     if (mounted) {
       setState(() {
         _followingCount = followingCount;
@@ -508,8 +504,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getAllPosts() async {
-    List<Post>? userPosts = (await DatabaseServices.getUserPosts(
-        widget.visitedUserId)).cast<Post>();
+    List<Post>? userPosts =
+        (await DatabaseServices.getUserPosts(widget.visitedUserId))
+            .cast<Post>();
     if (mounted) {
       setState(() {
         _allPosts = userPosts;
@@ -535,10 +532,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Colors.white,
 //           //backgroundColor: AppColor,
 //          //child: Image.asset('assets/post2.png',),
-          child: Image.asset('assets/post.png',),
+          child: Image.asset(
+            'assets/post.png',
+          ),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                CreatePostScreen(currentUserId: widget.currentUserId)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        CreatePostScreen(currentUserId: widget.currentUserId)));
           },
         ),
 //         //backgroundColor: Colors.white,
@@ -566,9 +568,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         image: userModel.coverImage.isEmpty
                             ? null
                             : DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(userModel.coverImage),
-                        ),
+                                fit: BoxFit.cover,
+                                image: NetworkImage(userModel.coverImage),
+                              ),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -580,36 +582,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox.shrink(),
                             widget.currentUserId == widget.visitedUserId
                                 ? PopupMenuButton(
-                              icon: Icon(
-                                Icons.more_horiz,
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                              itemBuilder: (_) {
-                                return <PopupMenuItem<String>>[
-                                  new PopupMenuItem(
-                                    child: Text('Logout'),
-                                    value: 'logout',
+                                    icon: Icon(
+                                      Icons.more_horiz,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                    itemBuilder: (_) {
+                                      return <PopupMenuItem<String>>[
+                                        new PopupMenuItem(
+                                          child: Text('Logout'),
+                                          value: 'logout',
+                                        )
+                                      ];
+                                    },
+                                    onSelected: (selectedItem) {
+                                      if (selectedItem == 'logout') {
+                                        AuthService.logOut();
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    WelcomeScreen()));
+                                      }
+                                    },
                                   )
-                                ];
-                              },
-                              onSelected: (selectedItem) {
-                                if (selectedItem == 'logout') {
-                                  AuthService.logOut();
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              WelcomeScreen()));
-                                }
-                              },
-                            )
                                 : SizedBox(),
                           ],
                         ),
                       ),
                     ),
-
 
                     Container(
                       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
@@ -623,87 +624,91 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 CircleAvatar(
                                   radius: 45,
-                                  backgroundImage: userModel.profilePicture
-                                      .isEmpty
+                                  backgroundImage: userModel
+                                          .profilePicture.isEmpty
                                       ? AssetImage('assets/placeholder.png')
-                                      : NetworkImage(userModel
-                                      .profilePicture) as ImageProvider,
+                                      : NetworkImage(userModel.profilePicture)
+                                          as ImageProvider,
                                 ),
                                 widget.currentUserId == widget.visitedUserId
                                     ? GestureDetector(
-                                  onTap: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditProfileScreen(
-                                              user: userModel,
-                                            ),
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditProfileScreen(
+                                                user: userModel,
+                                              ),
 //                                   // builder: (context) => LoginScreen(
 //                                   //   //user: userModel,
 //                                   // ),
-                                      ),
-                                    );
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    width: 70,
-                                    height: 35,
-                                    padding:
-                                    EdgeInsets.symmetric(horizontal: 10),
-                                    // decoration: BoxDecoration(
-                                    //   borderRadius: BorderRadius.circular(20),
-                                    //   color: Colors.white,
-                                    //   border: Border.all(color: AppColor_Blue),
-                                    // ),
-                                    child: Center(
-                                        // child: Image.network(
-                                        //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm1_GfEtPwInOTX60YtJXhvgm7w-3XyKPjjnfpzMndTtQHVnGdR6zkHNE6P60qg-DnYdA&usqp=CAU"
-                                        // ),
-                                      child: Icon(
-                                        Icons.edit,
-                                        size: 25,
-                                        color: AppColor_Gray,
-                                      ),
-                                      //  child: Text(
-                                      //    'Edit',
-                                      //    style: TextStyle(
-                                      //      fontSize: 17,
-                                      //      color: AppColor,
-                                      //      fontWeight: FontWeight.bold,
-                                      //    ),
-                                      //),
-                                    ),
-                                  ),
-                                )
+                                            ),
+                                          );
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          width: 70,
+                                          height: 35,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          // decoration: BoxDecoration(
+                                          //   borderRadius: BorderRadius.circular(20),
+                                          //   color: Colors.white,
+                                          //   border: Border.all(color: AppColor_Blue),
+                                          // ),
+                                          child: Center(
+                                            // child: Image.network(
+                                            //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm1_GfEtPwInOTX60YtJXhvgm7w-3XyKPjjnfpzMndTtQHVnGdR6zkHNE6P60qg-DnYdA&usqp=CAU"
+                                            // ),
+                                            child: Icon(
+                                              Icons.edit,
+                                              size: 25,
+                                              color: AppColor_Gray,
+                                            ),
+                                            //  child: Text(
+                                            //    'Edit',
+                                            //    style: TextStyle(
+                                            //      fontSize: 17,
+                                            //      color: AppColor,
+                                            //      fontWeight: FontWeight.bold,
+                                            //    ),
+                                            //),
+                                          ),
+                                        ),
+                                      )
                                     : GestureDetector(
-                                  onTap: followOrUnFollow,
-                                  child: Container(
-                                    width: 100,
-                                    height: 35,
-                                    padding:
-                                    EdgeInsets.symmetric(horizontal: 10),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: _isFollowing
-                                          ? Colors.white
-                                          : AppColor_Blue,
-                                      border: Border.all(color: AppColor_Blue),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        _isFollowing ? 'Following' : 'Follow',
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          color: _isFollowing
-                                              ? AppColor_Blue
-                                              : Colors.white,
-                                          fontWeight: FontWeight.bold,
+                                        onTap: followOrUnFollow,
+                                        child: Container(
+                                          width: 100,
+                                          height: 35,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: _isFollowing
+                                                ? Colors.white
+                                                : AppColor_Blue,
+                                            border: Border.all(
+                                                color: AppColor_Blue),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              _isFollowing
+                                                  ? 'Following'
+                                                  : 'Follow',
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                color: _isFollowing
+                                                    ? AppColor_Blue
+                                                    : Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
                               ],
                             ),
                             SizedBox(height: 10),
@@ -748,20 +753,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ],
                             ),
-                          ]
-                      ),
+                          ]),
                     ),
                     //POst and Media
                     SizedBox(height: 20),
 
                     buildProfileWidgets(userModel)
-
-                  ]
-
-
-              );
-            }
-        )
-    );
+                  ]);
+            }));
   }
 }

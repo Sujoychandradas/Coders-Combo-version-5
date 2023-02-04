@@ -1,3 +1,4 @@
+import 'package:coderscombo/Screens/Forgot_PassScreen.dart';
 import 'package:coderscombo/Screens/RegistrationScreen.dart';
 import 'package:coderscombo/Screens/WelcomeScreen.dart';
 import 'package:coderscombo/Services/auth_service.dart';
@@ -151,6 +152,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ForgotPasswordScreen()),
+                          );
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 75.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       Text(
                         'Do not have an account?',
                         style: TextStyle(color: Colors.grey[600]),
@@ -170,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

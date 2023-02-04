@@ -33,7 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
       leading: CircleAvatar(
         radius: 20,
         backgroundImage: user.profilePicture.isEmpty?
-        AssetImage('assets/placeholder.png'):
+         AssetImage('assets/placeholder.png'):
         NetworkImage(user.profilePicture) as ImageProvider,
       ),
       title: Text(user.name!),
