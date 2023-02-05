@@ -4,7 +4,6 @@ import 'package:coderscombo/Services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:email_otp/email_otp.dart';
 
-
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
 
@@ -30,7 +29,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //   emailAuth = new EmailAuth(
   //     sessionName: "Sample session",
   //   );
-
 
   //   /// Configuring the remote server
   //   emailAuth.config(remoteServerConfiguration);
@@ -112,6 +110,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       fillColor: Colors.grey.shade200,
                       filled: true,
                       hintText: 'Email',
+                      prefixIcon: Icon(Icons.email),
                       hintStyle: TextStyle(
                         color: Colors.black26,
                       ),
@@ -162,6 +161,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       fillColor: Colors.grey.shade200,
                       filled: true,
                       hintText: 'OTP',
+                      prefixIcon: Icon(Icons.verified),
                       hintStyle: TextStyle(
                         color: Colors.black26,
                       ),
@@ -187,6 +187,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         hintText: 'Name',
+                        prefixIcon: Icon(Icons.text_format),
                         hintStyle: TextStyle(
                           color: Colors.black26,
                         )),
@@ -211,6 +212,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       fillColor: Colors.grey.shade200,
                       filled: true,
+                      prefixIcon: Icon(Icons.lock),
                       hintText: 'Password',
                       hintStyle: TextStyle(
                         color: Colors.black26,

@@ -82,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fillColor: Colors.grey.shade200,
                         filled: true,
                         hintText: 'Email',
+                        prefixIcon: Icon(Icons.mail),
                         hintStyle: TextStyle(
                           color: Colors.black26,
                         )),
@@ -107,6 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fillColor: Colors.grey.shade200,
                       filled: true,
                       hintText: 'Password',
+                      prefixIcon: Icon(Icons.lock),
                       hintStyle: TextStyle(
                         color: Colors.black26,
                       ),
