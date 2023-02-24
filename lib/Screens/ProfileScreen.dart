@@ -398,10 +398,7 @@ class ProfileScreen extends StatefulWidget {
   final String currentUserId;
   final String visitedUserId;
 
-  const ProfileScreen(
-      {Key? key,
-      required this.currentUserId,
-      required this.visitedUserId}) // PARAMETERIZED CONSTRUCTOR
+  const ProfileScreen({Key? key, required this.currentUserId, required this.visitedUserId}) // PARAMETERIZED CONSTRUCTOR
       : super(key: key);
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -445,15 +442,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //);
     // break;
     //default:
-    return Center(
-        child: Text('Something wrong', style: TextStyle(fontSize: 25)));
+    return Center(child: Text('Something wrong', style: TextStyle(fontSize: 25)));
 
     //  break;
   }
 
   getFollowersCount() async {
-    int followersCount =
-        await DatabaseServices.followersNum(widget.visitedUserId);
+    int followersCount = await DatabaseServices.followersNum(widget.visitedUserId);
     if (mounted) {
       setState(() {
         _followersCount = followersCount;
@@ -462,8 +457,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getFollowingCount() async {
-    int followingCount =
-        await DatabaseServices.followingNum(widget.visitedUserId);
+    int followingCount = await DatabaseServices.followingNum(widget.visitedUserId);
     if (mounted) {
       setState(() {
         _followingCount = followingCount;
@@ -496,22 +490,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   setupIsFollowing() async {
-    bool isFollowingThisUser = await DatabaseServices.isFollowingUser(
-        widget.currentUserId, widget.visitedUserId);
+    bool isFollowingThisUser = await DatabaseServices.isFollowingUser(widget.currentUserId, widget.visitedUserId);
     setState(() {
       _isFollowing = isFollowingThisUser;
     });
   }
 
   getAllPosts() async {
-    List<Post>? userPosts =
-        (await DatabaseServices.getUserPosts(widget.visitedUserId))
-            .cast<Post>();
+    List<Post>? userPosts = (await DatabaseServices.getUserPosts(widget.visitedUserId)).cast<Post>();
     if (mounted) {
       setState(() {
         _allPosts = userPosts;
-        _mediaPosts =
-            _allPosts.where((element) => element.image!.isNotEmpty).toList();
+        _mediaPosts = _allPosts.where((element) => element.image!.isNotEmpty).toList();
       });
     }
   }
@@ -536,11 +526,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             'assets/post.png',
           ),
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        CreatePostScreen(currentUserId: widget.currentUserId)));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CreatePostScreen(currentUserId: widget.currentUserId)));
           },
         ),
 //         //backgroundColor: Colors.white,
@@ -557,209 +544,187 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               }
               UserModel userModel = UserModel.fromDoc(snapshot.data);
-              return ListView(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  children: [
-                    Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        color: AppColor_Blue,
-                        image: userModel.coverImage.isEmpty
-                            ? null
-                            : DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(userModel.coverImage),
-                              ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox.shrink(),
-                            widget.currentUserId == widget.visitedUserId
-                                ? PopupMenuButton(
-                                    icon: Icon(
-                                      Icons.more_horiz,
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
-                                    itemBuilder: (_) {
-                                      return <PopupMenuItem<String>>[
-                                        new PopupMenuItem(
-                                          child: Text('Logout'),
-                                          value: 'logout',
-                                        )
-                                      ];
-                                    },
-                                    onSelected: (selectedItem) {
-                                      if (selectedItem == 'logout') {
-                                        AuthService.logOut();
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    WelcomeScreen()));
-                                      }
-                                    },
-                                  )
-                                : SizedBox(),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    Container(
-                      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                CircleAvatar(
-                                  radius: 45,
-                                  backgroundImage: userModel
-                                          .profilePicture.isEmpty
-                                      ? AssetImage('assets/placeholder.png')
-                                      : NetworkImage(userModel.profilePicture)
-                                          as ImageProvider,
+              return ListView(physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()), children: [
+                Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: AppColor_Blue,
+                    image: userModel.coverImage.isEmpty
+                        ? null
+                        : DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(userModel.coverImage),
+                          ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox.shrink(),
+                        widget.currentUserId == widget.visitedUserId
+                            ? PopupMenuButton(
+                                icon: Icon(
+                                  Icons.more_horiz,
+                                  color: Colors.white,
+                                  size: 30,
                                 ),
-                                widget.currentUserId == widget.visitedUserId
-                                    ? GestureDetector(
-                                        onTap: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditProfileScreen(
-                                                user: userModel,
-                                              ),
+                                itemBuilder: (_) {
+                                  return <PopupMenuItem<String>>[
+                                    new PopupMenuItem(
+                                      child: Text('Logout'),
+                                      value: 'logout',
+                                    )
+                                  ];
+                                },
+                                onSelected: (selectedItem) {
+                                  if (selectedItem == 'logout') {
+                                    AuthService.logOut();
+                                    Navigator.pushReplacement(
+                                        context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+                                  }
+                                },
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
+                  ),
+                ),
+
+                Container(
+                  transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        CircleAvatar(
+                          radius: 45,
+                          backgroundImage: userModel.profilePicture.isEmpty
+                              ? AssetImage('assets/placeholder.png')
+                              : NetworkImage(userModel.profilePicture) as ImageProvider,
+                        ),
+                        widget.currentUserId == widget.visitedUserId
+                            ? GestureDetector(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditProfileScreen(
+                                        user: userModel,
+                                      ),
 //                                   // builder: (context) => LoginScreen(
 //                                   //   //user: userModel,
 //                                   // ),
-                                            ),
-                                          );
-                                          setState(() {});
-                                        },
-                                        child: Container(
-                                          width: 70,
-                                          height: 35,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          // decoration: BoxDecoration(
-                                          //   borderRadius: BorderRadius.circular(20),
-                                          //   color: Colors.white,
-                                          //   border: Border.all(color: AppColor_Blue),
-                                          // ),
-                                          child: Center(
-                                            // child: Image.network(
-                                            //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm1_GfEtPwInOTX60YtJXhvgm7w-3XyKPjjnfpzMndTtQHVnGdR6zkHNE6P60qg-DnYdA&usqp=CAU"
-                                            // ),
-                                            child: Icon(
-                                              Icons.edit,
-                                              size: 25,
-                                              color: AppColor_Gray,
-                                            ),
-                                            //  child: Text(
-                                            //    'Edit',
-                                            //    style: TextStyle(
-                                            //      fontSize: 17,
-                                            //      color: AppColor,
-                                            //      fontWeight: FontWeight.bold,
-                                            //    ),
-                                            //),
-                                          ),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: followOrUnFollow,
-                                        child: Container(
-                                          width: 100,
-                                          height: 35,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: _isFollowing
-                                                ? Colors.white
-                                                : AppColor_Blue,
-                                            border: Border.all(
-                                                color: AppColor_Blue),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              _isFollowing
-                                                  ? 'Following'
-                                                  : 'Follow',
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                                color: _isFollowing
-                                                    ? AppColor_Blue
-                                                    : Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                    ),
+                                  );
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  width: 70,
+                                  height: 35,
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  // decoration: BoxDecoration(
+                                  //   borderRadius: BorderRadius.circular(20),
+                                  //   color: Colors.white,
+                                  //   border: Border.all(color: AppColor_Blue),
+                                  // ),
+                                  child: Center(
+                                    // child: Image.network(
+                                    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm1_GfEtPwInOTX60YtJXhvgm7w-3XyKPjjnfpzMndTtQHVnGdR6zkHNE6P60qg-DnYdA&usqp=CAU"
+                                    // ),
+                                    child: Icon(
+                                      Icons.edit,
+                                      size: 25,
+                                      color: AppColor_Gray,
+                                    ),
+                                    //  child: Text(
+                                    //    'Edit',
+                                    //    style: TextStyle(
+                                    //      fontSize: 17,
+                                    //      color: AppColor,
+                                    //      fontWeight: FontWeight.bold,
+                                    //    ),
+                                    //),
+                                  ),
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: followOrUnFollow,
+                                child: Container(
+                                  width: 100,
+                                  height: 35,
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: _isFollowing ? Colors.white : AppColor_Blue,
+                                    border: Border.all(color: AppColor_Blue),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      _isFollowing ? 'Following' : 'Follow',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        color: _isFollowing ? AppColor_Blue : Colors.white,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              userModel.name!,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              userModel.bio!,
-                              style: TextStyle(
-                                color: Colors.black45,
-                                fontSize: 15,
-                              ),
-                            ),
-                            SizedBox(height: 15),
-                            Row(
-                              children: [
-                                Text(
-                                  '$_followingCount Following',
-                                  style: TextStyle(
-                                    //color: Colors.white70,
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 2,
+                                    ),
                                   ),
                                 ),
-                                SizedBox(width: 20),
-                                Text(
-                                  '$_followersCount Followers',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 2,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ]),
+                              ),
+                      ],
                     ),
-                    //POst and Media
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
+                    Text(
+                      userModel.name!,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      userModel.bio!,
+                      style: TextStyle(
+                        color: Colors.black45,
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Text(
+                          '$_followingCount Following',
+                          style: TextStyle(
+                            //color: Colors.white70,
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        Text(
+                          '$_followersCount Followers',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]),
+                ),
+                //POst and Media
+                SizedBox(height: 20),
 
-                    buildProfileWidgets(userModel)
-                  ]);
+                buildProfileWidgets(userModel)
+              ]);
             }));
   }
 }

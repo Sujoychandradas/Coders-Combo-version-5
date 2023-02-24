@@ -129,8 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Log In',
                     style: TextStyle(color: AppColor_Blue, fontSize: 20),
                   ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   onPressed: () async {
                     bool isValid = await AuthService.login(_email, _password);
 
@@ -158,8 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => ForgotPasswordScreen()),
+                            MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
                           );
                         },
                         child: Text(
@@ -186,8 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => RegistrationScreen()),
+                            MaterialPageRoute(builder: (context) => RegistrationScreen()),
                           );
                         },
                         child: Text(

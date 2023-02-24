@@ -1,0 +1,338 @@
+@startuml
+set namespaceSeparator ::
+
+class "coderscombo::chatbot::bot.dart::bot" {
+  +State<bot> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::chatbot::bot.dart::bot"
+
+class "coderscombo::chatbot::bot.dart::_botState" {
+  +DialogFlowtter dialogFlowtter
+  -TextEditingController _controller
+  +List<Map<String, dynamic>> messages
+  +void initState()
+  +Widget build()
+  +dynamic sendMessage()
+  +dynamic addMessage()
+}
+
+"coderscombo::chatbot::bot.dart::_botState" o-- "dialog_flowtter::src::dialog.dart::DialogFlowtter"
+"coderscombo::chatbot::bot.dart::_botState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::chatbot::bot.dart::_botState"
+
+class "coderscombo::chatbot::message.dart::MessagesScreen" {
+  +List<dynamic> messages
+  +_MessagesScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::chatbot::message.dart::MessagesScreen"
+
+class "coderscombo::chatbot::message.dart::_MessagesScreenState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::chatbot::message.dart::_MessagesScreenState"
+
+class "coderscombo::main.dart::MyApp" {
+  +Widget getScreenId()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "coderscombo::main.dart::MyApp"
+
+class "coderscombo::Models::Post.dart::Post" {
+  +String? id
+  +String? authorId
+  +String? text
+  +String? image
+  +Timestamp? timestamp
+  +int? likes
+}
+
+"coderscombo::Models::Post.dart::Post" o-- "cloud_firestore_platform_interface::src::timestamp.dart::Timestamp"
+
+class "coderscombo::Models::UserModel.dart::UserModel" {
+  +String? id
+  +String? name
+  +String profilePicture
+  +String? email
+  +String? bio
+  +String coverImage
+}
+
+class "coderscombo::Screens::CreatePostScreen.dart::CreatePostScreen" {
+  +String currentUserId
+  +_CreatePostScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::CreatePostScreen.dart::CreatePostScreen"
+
+class "coderscombo::Screens::CreatePostScreen.dart::_CreatePostScreenState" {
+  -String? _postText
+  -File? _pickedImage
+  -bool _loading
+  +dynamic handleImageFromGallery()
+  +Widget build()
+}
+
+"coderscombo::Screens::CreatePostScreen.dart::_CreatePostScreenState" o-- "dart::io::File"
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::CreatePostScreen.dart::_CreatePostScreenState"
+
+class "coderscombo::Screens::DSA.dart::DSA" {
+  +State<DSA> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::DSA.dart::DSA"
+
+class "coderscombo::Screens::DSA.dart::_DSAState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::DSA.dart::_DSAState"
+
+class "coderscombo::Screens::EditProfileScreen.dart::EditProfileScreen" {
+  +UserModel user
+  +_EditProfileScreenState createState()
+}
+
+"coderscombo::Screens::EditProfileScreen.dart::EditProfileScreen" o-- "coderscombo::Models::UserModel.dart::UserModel"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::EditProfileScreen.dart::EditProfileScreen"
+
+class "coderscombo::Screens::EditProfileScreen.dart::_EditProfileScreenState" {
+  -String? _name
+  -String? _bio
+  -File? _profileImage
+  -File? _coverImage
+  -String? _imagePickedType
+  -GlobalKey<FormState> _formKey
+  -bool _isLoading
+  +dynamic displayCoverImage()
+  +dynamic displayProfileImage()
+  +dynamic saveProfile()
+  +dynamic handleImageFromGallery()
+  +void initState()
+  +Widget build()
+}
+
+"coderscombo::Screens::EditProfileScreen.dart::_EditProfileScreenState" o-- "dart::io::File"
+"coderscombo::Screens::EditProfileScreen.dart::_EditProfileScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::EditProfileScreen.dart::_EditProfileScreenState"
+
+class "coderscombo::Screens::FeedScreen.dart::FeedScreen" {
+  +String currentUserId
+  +State<FeedScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::FeedScreen.dart::FeedScreen"
+
+class "coderscombo::Screens::FeedScreen.dart::_FeedScreenState" {
+  -int _selectedTab
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::FeedScreen.dart::_FeedScreenState"
+
+class "coderscombo::Screens::Forgot_PassScreen.dart::ForgotPasswordScreen" {
+  +State<ForgotPasswordScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::Forgot_PassScreen.dart::ForgotPasswordScreen"
+
+class "coderscombo::Screens::Forgot_PassScreen.dart::_ForgotPasswordScreenState" {
+  +TextEditingController emailcontroller
+  +FirebaseAuth auth
+  +Widget build()
+}
+
+"coderscombo::Screens::Forgot_PassScreen.dart::_ForgotPasswordScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"coderscombo::Screens::Forgot_PassScreen.dart::_ForgotPasswordScreenState" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::Forgot_PassScreen.dart::_ForgotPasswordScreenState"
+
+class "coderscombo::Screens::HomeScreen.dart::HomeScreen" {
+  +String currentUserId
+  +_HomeScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::HomeScreen.dart::HomeScreen"
+
+class "coderscombo::Screens::HomeScreen.dart::_HomeScreenState" {
+  -List<dynamic> _followingPosts
+  -bool _loading
+  +dynamic buildPosts()
+  +dynamic showfollowingPosts()
+  +dynamic setupFollowingPosts()
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::HomeScreen.dart::_HomeScreenState"
+
+class "coderscombo::Screens::LoginScreen.dart::LoginScreen" {
+  +State<LoginScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::LoginScreen.dart::LoginScreen"
+
+class "coderscombo::Screens::LoginScreen.dart::_LoginScreenState" {
+  -String _email
+  -String _password
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::LoginScreen.dart::_LoginScreenState"
+
+class "coderscombo::Screens::Messenger.dart::Messenger" {
+  +State<Messenger> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::Messenger.dart::Messenger"
+
+class "coderscombo::Screens::Messenger.dart::_MessengerState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::Messenger.dart::_MessengerState"
+
+class "coderscombo::Screens::ProfileScreen.dart::ProfileScreen" {
+  +String currentUserId
+  +String visitedUserId
+  +State<ProfileScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::ProfileScreen.dart::ProfileScreen"
+
+class "coderscombo::Screens::ProfileScreen.dart::_ProfileScreenState" {
+  -int _followersCount
+  -int _followingCount
+  -bool _isFollowing
+  -int _profileSegmentedValue
+  -List<Post> _allPosts
+  -List<Post> _mediaPosts
+  +Widget buildProfileWidgets()
+  +dynamic getFollowersCount()
+  +dynamic getFollowingCount()
+  +dynamic followOrUnFollow()
+  +dynamic unFollowUser()
+  +dynamic followUser()
+  +dynamic setupIsFollowing()
+  +dynamic getAllPosts()
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::ProfileScreen.dart::_ProfileScreenState"
+
+class "coderscombo::Screens::RegistrationScreen.dart::RegistrationScreen" {
+  +State<RegistrationScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::RegistrationScreen.dart::RegistrationScreen"
+
+class "coderscombo::Screens::RegistrationScreen.dart::_RegistrationScreenState" {
+  -TextEditingController _emailcontroller
+  -TextEditingController _otpControllar
+  +EmailOTP myauth
+  -String _email
+  -String _password
+  -String _name
+  +Widget build()
+}
+
+"coderscombo::Screens::RegistrationScreen.dart::_RegistrationScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"coderscombo::Screens::RegistrationScreen.dart::_RegistrationScreenState" o-- "email_otp::email_otp.dart::EmailOTP"
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::RegistrationScreen.dart::_RegistrationScreenState"
+
+class "coderscombo::Screens::SearchScreen.dart::SearchScreen" {
+  +String currentUserId
+  +State<SearchScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::SearchScreen.dart::SearchScreen"
+
+class "coderscombo::Screens::SearchScreen.dart::_SearchScreenState" {
+  -Future<QuerySnapshot<Object?>>? _users
+  -TextEditingController _searchController
+  +dynamic clearSearch()
+  +dynamic buildUserTile()
+  +Widget build()
+}
+
+"coderscombo::Screens::SearchScreen.dart::_SearchScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::SearchScreen.dart::_SearchScreenState"
+
+class "coderscombo::Screens::WelcomeScreen.dart::WelcomeScreen" {
+  +State<WelcomeScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Screens::WelcomeScreen.dart::WelcomeScreen"
+
+class "coderscombo::Screens::WelcomeScreen.dart::_WelcomeScreenState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Screens::WelcomeScreen.dart::_WelcomeScreenState"
+
+class "coderscombo::Services::auth_service.dart::AuthService" {
+  {static} -FirebaseAuth _auth
+  {static} -FirebaseFirestore _fireStore
+  {static} +Future<bool> signUp()
+  {static} +Future<bool> login()
+  {static} +void logOut()
+}
+
+"coderscombo::Services::auth_service.dart::AuthService" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"coderscombo::Services::auth_service.dart::AuthService" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
+
+class "coderscombo::Services::DatabaseServices.dart::DatabaseServices" {
+  {static} +Future<int> followersNum()
+  {static} +Future<int> followingNum()
+  {static} +void updateUserData()
+  {static} +Future<QuerySnapshot<Object?>> searchUsers()
+  {static} +void followUser()
+  {static} +void unFollowUser()
+  {static} +Future<bool> isFollowingUser()
+  {static} +void createPost()
+  {static} +Future<List<dynamic>> getUserPosts()
+  {static} +Future<List<dynamic>> getHomePosts()
+  {static} +void likePost()
+  {static} +void unlikePost()
+  {static} +Future<bool> isLikePost()
+}
+
+class "coderscombo::Services::StroageService.dart::StorageService" {
+  {static} +Future<String> uploadProfilePicture()
+  {static} +Future<String> uploadCoverPicture()
+  {static} +Future<String> uploadTweetPicture()
+  {static} +Future<File?> compressImage()
+}
+
+class "coderscombo::utils::utils.dart::Utils" {
+  +void toastMessage()
+}
+
+class "coderscombo::Widgets::PostContainer.dart::PostContainer" {
+  +Post post
+  +UserModel author
+  +String currentUserId
+  +_PostContainerState createState()
+}
+
+"coderscombo::Widgets::PostContainer.dart::PostContainer" o-- "coderscombo::Models::Post.dart::Post"
+"coderscombo::Widgets::PostContainer.dart::PostContainer" o-- "coderscombo::Models::UserModel.dart::UserModel"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "coderscombo::Widgets::PostContainer.dart::PostContainer"
+
+class "coderscombo::Widgets::PostContainer.dart::_PostContainerState" {
+  -int _likesCount
+  -bool _isLiked
+  +dynamic initPostLikes()
+  +dynamic likedPost()
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "coderscombo::Widgets::PostContainer.dart::_PostContainerState"
+
+
+@enduml

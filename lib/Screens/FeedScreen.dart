@@ -64,8 +64,8 @@ class _FeedScreenState extends State<FeedScreen> {
           GButton(
             icon: Icons.message_outlined,
             text: 'Message',
-            onPressed: ()  {
-               LaunchApp.openApp(
+            onPressed: () {
+              LaunchApp.openApp(
                 androidPackageName: 'com.coderscombo.chatapp',
               );
             },

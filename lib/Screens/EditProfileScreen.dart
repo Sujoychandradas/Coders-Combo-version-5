@@ -289,7 +289,6 @@ import '../Models/UserModel.dart';
 import '../Services/DatabaseServices.dart';
 import '../Services/StroageService.dart';
 
-
 class EditProfileScreen extends StatefulWidget {
   final UserModel user;
 
@@ -340,14 +339,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       if (_profileImage == null) {
         profilePictureUrl = widget.user.profilePicture;
       } else {
-        profilePictureUrl = await StorageService.uploadProfilePicture(
-            widget.user.profilePicture, _profileImage!);
+        profilePictureUrl = await StorageService.uploadProfilePicture(widget.user.profilePicture, _profileImage!);
       }
       if (_coverImage == null) {
         coverPictureUrl = widget.user.coverImage;
       } else {
-        coverPictureUrl = await StorageService.uploadCoverPicture(
-            widget.user.coverImage, _coverImage!);
+        coverPictureUrl = await StorageService.uploadCoverPicture(widget.user.coverImage, _coverImage!);
       }
       UserModel user = UserModel(
         id: widget.user.id,
@@ -365,7 +362,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   handleImageFromGallery() async {
     try {
       //File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-      File imageFile = File(await ImagePicker().getImage(source: ImageSource.gallery).then((pickedFile) => pickedFile!.path));
+      File imageFile =
+          File(await ImagePicker().getImage(source: ImageSource.gallery).then((pickedFile) => pickedFile!.path));
       if (imageFile != null) {
         if (_imagePickedType == 'profile') {
           setState(() {
@@ -393,8 +391,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
+        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         children: [
           GestureDetector(
             onTap: () {
@@ -410,9 +407,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     image: _coverImage == null && widget.user.coverImage.isEmpty
                         ? null
                         : DecorationImage(
-                      fit: BoxFit.cover,
-                      image: displayCoverImage(),
-                    ),
+                            fit: BoxFit.cover,
+                            image: displayCoverImage(),
+                          ),
                   ),
                 ),
                 Container(
@@ -524,9 +521,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             labelText: 'Name',
                             labelStyle: TextStyle(color: AppColor_Blue),
                           ),
-                          validator: (input) => input!.trim().length < 2
-                              ? 'please enter valid name'
-                              : null,
+                          validator: (input) => input!.trim().length < 2 ? 'please enter valid name' : null,
                           onSaved: (value) {
                             _name = value!;
                           },
@@ -545,9 +540,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         SizedBox(height: 30),
                         _isLoading
                             ? CircularProgressIndicator(
-                          valueColor:
-                          AlwaysStoppedAnimation(AppColor_Blue),
-                        )
+                                valueColor: AlwaysStoppedAnimation(AppColor_Blue),
+                              )
                             : SizedBox.shrink()
                       ],
                     )),

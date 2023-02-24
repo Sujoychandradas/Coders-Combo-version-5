@@ -11,7 +11,6 @@ import '../Services/StroageService.dart';
 //import '../Services/StorageService.dart';
 
 class CreatePostScreen extends StatefulWidget {
-
   final String currentUserId;
 
   const CreatePostScreen({super.key, required this.currentUserId});
@@ -25,17 +24,18 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   File? _pickedImage;
   bool _loading = false;
 
-  handleImageFromGallery() async{
-    try{
+  handleImageFromGallery() async {
+    try {
       //File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
       //File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-      File imageFile = File(await ImagePicker().pickImage(source: ImageSource.gallery).then((pickedFile) => pickedFile!.path));
-      if(imageFile != null){
+      File imageFile =
+          File(await ImagePicker().pickImage(source: ImageSource.gallery).then((pickedFile) => pickedFile!.path));
+      if (imageFile != null) {
         setState(() {
-          _pickedImage=imageFile;
+          _pickedImage = imageFile;
         });
       }
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }
@@ -65,46 +65,41 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               maxLength: 280,
               maxLines: 7,
               decoration: InputDecoration(
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColor_White,
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColor_White,
+                    ),
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade400,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade400,
+                    ),
                   ),
-                ),
-                fillColor: Colors.grey.shade200,
-                filled: true,
-                hintText: 'Decode your thoughts here!',
-                hintStyle: TextStyle(
-                  color: Colors.black45
-                )
-              ),
+                  fillColor: Colors.grey.shade200,
+                  filled: true,
+                  hintText: 'Decode your thoughts here!',
+                  hintStyle: TextStyle(color: Colors.black45)),
               onChanged: (value) {
                 _postText = value;
               },
             ),
             SizedBox(height: 10),
-            _pickedImage == null?
-            SizedBox.shrink():
-            Column(
-              children: [
-                Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                      color: AppColor_Blue,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: FileImage(_pickedImage!),
-                      )
+            _pickedImage == null
+                ? SizedBox.shrink()
+                : Column(
+                    children: [
+                      Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                            color: AppColor_Blue,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: FileImage(_pickedImage!),
+                            )),
+                      ),
+                      SizedBox(height: 20),
+                    ],
                   ),
-                ),
-                SizedBox(height: 20),
-              ],
-            ),
-
             GestureDetector(
               onTap: handleImageFromGallery,
               child: Container(
@@ -126,27 +121,23 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               ),
             ),
             SizedBox(height: 20),
-
             MaterialButton(
               elevation: 10,
               color: Colors.white70,
               child: const Text(
                 'Post',
-                style: TextStyle(
-                    color: AppColor_Blue,
-                    fontSize: 20
-                  ),
-                ),
+                style: TextStyle(color: AppColor_Blue, fontSize: 20),
+              ),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-              onPressed: () async{
+              onPressed: () async {
                 setState(() {
-                  _loading=true;
+                  _loading = true;
                 });
-                if(_postText != null && _postText!.isNotEmpty){
+                if (_postText != null && _postText!.isNotEmpty) {
                   String image;
-                  if(_pickedImage==null){
-                    image='';
-                  }else{
+                  if (_pickedImage == null) {
+                    image = '';
+                  } else {
                     //image = await StorageService.uploadTweetPicture(_pickedImage);
                     image = await StorageService.uploadTweetPicture(_pickedImage!);
                   }
@@ -156,15 +147,15 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     authorId: widget.currentUserId,
                     likes: 0,
                     //share: 0,
-                    timestamp: Timestamp.fromDate(DateTime.now(),
+                    timestamp: Timestamp.fromDate(
+                      DateTime.now(),
                     ),
                   );
                   DatabaseServices.createPost(post);
                   Navigator.pop(context);
-
                 }
                 setState(() {
-                  _loading=false;
+                  _loading = false;
                 });
                 // else{
                 //   print('Login Problem');
@@ -178,11 +169,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           ],
         ),
       ),
-
     );
   }
 }
-
 
 // import 'dart:io';
 //

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import '../Services/DatabaseServices.dart';
 
 class SearchScreen extends StatefulWidget {
-
   final String currentUserId;
 
   const SearchScreen({Key? key, required this.currentUserId}) : super(key: key);
@@ -17,32 +16,33 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  Future<QuerySnapshot> ?_users;
+  Future<QuerySnapshot>? _users;
   TextEditingController _searchController = TextEditingController();
 
-  clearSearch(){
-    WidgetsBinding.instance.addPostFrameCallback((_)=>_searchController.clear());
+  clearSearch() {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _searchController.clear());
 
     setState(() {
-      _users=null!;
+      _users = null!;
     });
   }
 
-  buildUserTile(UserModel user){
+  buildUserTile(UserModel user) {
     return ListTile(
       leading: CircleAvatar(
         radius: 20,
-        backgroundImage: user.profilePicture.isEmpty?
-         AssetImage('assets/placeholder.png'):
-        NetworkImage(user.profilePicture) as ImageProvider,
+        backgroundImage: user.profilePicture.isEmpty
+            ? AssetImage('assets/placeholder.png')
+            : NetworkImage(user.profilePicture) as ImageProvider,
       ),
       title: Text(user.name!),
-      onTap: (){
+      onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context)=>ProfileScreen(
-            currentUserId: widget.currentUserId,
-            visitedUserId: user.id!,
-          ),
+          MaterialPageRoute(
+            builder: (context) => ProfileScreen(
+              currentUserId: widget.currentUserId,
+              visitedUserId: user.id!,
+            ),
           ),
         );
       },
@@ -80,69 +80,62 @@ class _SearchScreenState extends State<SearchScreen> {
                 Icons.clear,
                 color: Colors.black54,
               ),
-              onPressed: (){
+              onPressed: () {
                 clearSearch();
               },
             ),
             filled: true,
           ),
-          onChanged: (input){
-            if(input.isNotEmpty){
+          onChanged: (input) {
+            if (input.isNotEmpty) {
               setState(() {
-                _users=DatabaseServices.searchUsers(input);
+                _users = DatabaseServices.searchUsers(input);
               });
             }
           },
-
         ),
       ),
-      body: _users==null?
-      Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-                Icons.search, size: 200,
-              color: AppColor_Blue,
-            ),
-            Text(
-              'Search Coders...',
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                color: AppColor_Blue
-                ),
-
+      body: _users == null
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.search,
+                    size: 200,
+                    color: AppColor_Blue,
+                  ),
+                  Text(
+                    'Search Coders...',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: AppColor_Blue),
+                  ),
+                ],
               ),
-          ],
-        ),
-      )
+            )
           : FutureBuilder<QuerySnapshot<Object?>>(
-          future: _users,
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-            if(!snapshot.hasData){
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            //if(snapshot.data.documents.length==0){
-            if(snapshot.data!.docs.length==0){
-              return Center(
-                child: Text('No Coders Found!'),
-              );
-            }
-            return ListView.builder(
-              //itemCount: snapshot.data!.documents.length,//
-                itemCount: snapshot.data!.docs.length,//
-                itemBuilder: (BuildContext context, int index){
-                  //UserModel user = UserModel.fromDoc(snapshot.data.documents[index]);//
-                  UserModel user = UserModel.fromDoc(snapshot.data!.docs[index]);//
-
-                  return buildUserTile(user);
+              future: _users,
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
-            );
-          }
-      ),
+                //if(snapshot.data.documents.length==0){
+                if (snapshot.data!.docs.length == 0) {
+                  return Center(
+                    child: Text('No Coders Found!'),
+                  );
+                }
+                return ListView.builder(
+                    //itemCount: snapshot.data!.documents.length,//
+                    itemCount: snapshot.data!.docs.length, //
+                    itemBuilder: (BuildContext context, int index) {
+                      //UserModel user = UserModel.fromDoc(snapshot.data.documents[index]);//
+                      UserModel user = UserModel.fromDoc(snapshot.data!.docs[index]); //
+
+                      return buildUserTile(user);
+                    });
+              }),
     );
   }
 }

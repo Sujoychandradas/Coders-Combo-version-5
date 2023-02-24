@@ -11,7 +11,7 @@ class Messenger extends StatefulWidget {
 class _MessengerState extends State<Messenger> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: AppColor_Blue,
     );
   }

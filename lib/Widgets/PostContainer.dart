@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import '../Models/Post.dart';
 import '../Models/UserModel.dart';
 
-
 class PostContainer extends StatefulWidget {
-
   final Post post;
   final UserModel author;
   final String currentUserId;
@@ -19,42 +17,41 @@ class PostContainer extends StatefulWidget {
 }
 
 class _PostContainerState extends State<PostContainer> {
+  int _likesCount = 0;
+  bool _isLiked = false;
 
-  int _likesCount=0;
-  bool _isLiked=false;
-
-  initPostLikes() async{
+  initPostLikes() async {
     bool isLiked = await DatabaseServices.isLikePost(widget.currentUserId, widget.post);
 
-    if(mounted){
+    if (mounted) {
       setState(() {
         _isLiked = isLiked;
       });
     }
-
   }
 
-  likedPost(){
-    if(_isLiked){
+  likedPost() {
+    if (_isLiked) {
       DatabaseServices.unlikePost(widget.currentUserId, widget.post);
       setState(() {
-        _isLiked=false;
+        _isLiked = false;
         _likesCount--;
       });
-    }else{
+    } else {
       DatabaseServices.likePost(widget.currentUserId, widget.post);
       setState(() {
-        _isLiked=true;
+        _isLiked = true;
         _likesCount++;
       });
     }
   }
 
-  void initState(){
+  void initState() {
     super.initState();
     _likesCount = widget.post.likes!;
     initPostLikes();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,34 +80,29 @@ class _PostContainerState extends State<PostContainer> {
               ],
             ),
             SizedBox(height: 15),
-            Text(
-                widget.post.text!,
+            Text(widget.post.text!,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 15,
-                )
-            ),
+                )),
             widget.post.image!.isEmpty
                 ? SizedBox.shrink()
                 : Column(
-              children: [
-                SizedBox(height: 15),
-                Container(
-                  height: 250,
-                  decoration: BoxDecoration(
-                      color: AppColor_Blue,
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(widget.post.image!),
+                    children: [
+                      SizedBox(height: 15),
+                      Container(
+                        height: 250,
+                        decoration: BoxDecoration(
+                            color: AppColor_Blue,
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(widget.post.image!),
+                            )),
                       )
+                    ],
                   ),
-                )
-              ],
-            ),
-
             SizedBox(height: 15),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -122,14 +114,14 @@ class _PostContainerState extends State<PostContainer> {
                           icon: Icon(
                             //_isLiked?Icons.favorite:Icons.favorite_border,
                             //_isLiked?Icons.sunny:Icons.lightbulb,
-                            _isLiked?Icons.thumb_up:Icons.thumb_up_alt_outlined,
+                            _isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
                             //color: _isLiked? AppColor:Colors.white,
-                            color: _isLiked? AppColor_Blue:Colors.black,
+                            color: _isLiked ? AppColor_Blue : Colors.black,
                           ),
                           onPressed: likedPost,
                         ),
                         Text(
-                          _likesCount.toString()+' Likes',
+                          _likesCount.toString() + ' Likes',
                           style: TextStyle(color: Colors.black54),
                         ),
                       ],
@@ -146,14 +138,11 @@ class _PostContainerState extends State<PostContainer> {
                     //   ],
                     // ),
                   ],
-
                 ),
-
                 Text(
                   widget.post.timestamp!.toDate().toString().substring(0, 19),
                   style: TextStyle(color: Colors.black45),
                 ),
-
               ],
             ),
             SizedBox(height: 10),
@@ -162,11 +151,8 @@ class _PostContainerState extends State<PostContainer> {
               indent: 1,
               //endIndent: 6,
               color: Colors.grey.shade400,
-
-
             ),
           ],
-        )
-    );
+        ));
   }
 }

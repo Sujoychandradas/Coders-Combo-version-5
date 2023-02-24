@@ -13,12 +13,12 @@ class _DSAState extends State<DSA> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-          child: WebView(
-            javascriptMode: JavascriptMode.unrestricted,
-            initialUrl: 'https://showmikdebnath.github.io/DSA_blog/',
-          ),
+      body: SafeArea(
+        child: WebView(
+          javascriptMode: JavascriptMode.unrestricted,
+          initialUrl: 'https://showmikdebnath.github.io/DSA_blog/',
         ),
+      ),
     );
   }
 }

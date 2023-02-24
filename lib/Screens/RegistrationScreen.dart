@@ -124,13 +124,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               otpLength: 6,
                               otpType: OTPType.digitsOnly);
                           if (await myauth.sendOTP() == true) {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text("OTP has been sent"),
                             ));
                           } else {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text("Oops, OTP send failed"),
                             ));
                           }
@@ -150,6 +148,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: TextField(
+                    maxLength: 6,
                     controller: _otpControllar,
                     decoration: InputDecoration(
                       enabledBorder: const OutlineInputBorder(
@@ -166,9 +165,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         color: Colors.black26,
                       ),
                     ),
-                    onChanged: (value) {
-                      _password = value;
-                    },
                   ),
                 ),
 
@@ -234,14 +230,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     'SIGN UP',
                     style: TextStyle(color: AppColor_Blue, fontSize: 20),
                   ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   onPressed: () async {
-                    bool isValid =
-                        await AuthService.signUp(_name, _email, _password);
-                    if (await myauth.verifyOTP(otp: _otpControllar.text) ==
-                            true &&
-                        isValid) {
+                    bool isValid = await AuthService.signUp(_name, _email, _password);
+                    if (await myauth.verifyOTP(otp: _otpControllar.text) == true && isValid) {
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text("OTP is verified"),
@@ -283,8 +275,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
+                            MaterialPageRoute(builder: (context) => LoginScreen()),
                           );
                         },
                         child: Text(

@@ -4,29 +4,26 @@ import '../Screens/WelcomeScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(const MyApp()); //its a thread
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  Widget getScreenId(){
+  Widget getScreenId() {
     return StreamBuilder<dynamic>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (BuildContext context, snapshot){
-          if(snapshot.hasData){
+        //stream builder every 1 second a update kore...ar future builder every 5 second
+        stream: FirebaseAuth.instance.authStateChanges(), //current user available ase ni
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.hasData) {
             return FeedScreen(currentUserId: snapshot.data.uid);
-          }
-          else{
+          } else {
             return WelcomeScreen();
           }
-        }
-    );
+        });
   }
 
   // This widget is the root of your application.
@@ -43,4 +40,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
