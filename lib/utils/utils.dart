@@ -10,6 +10,6 @@ class Utils {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0);
+        fontSize: 15.0);
   }
 }
