@@ -1,16 +1,3 @@
 # coderscombo
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Welcome to Coder’s Combo, a pioneering social media platform tailored exclusively for coders. Integrating Flutter, Firebase, and Dialogflow API, this dynamic space fosters collaboration, provides access to a dedicated DSA blog, and offers the efficiency of an automated chatbot. With a secure one-to-one messaging system, Coder’s Combo is your ultimate hub for all things coding.
